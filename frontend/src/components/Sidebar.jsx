@@ -18,8 +18,8 @@ const style =
 const Sidebar = ({ activeLink }) => {
   const getLinkClass = (linkName) => {
     return linkName === activeLink
-      ? "flex items-center gap-4 px-3 py-1 rounded-lg bg-white text-[#D9534F] font-medium text-[15px]"
-      : "flex items-center gap-4 px-3 py-1 rounded-lg text-[15px] hover:bg-white hover:text-[#D9534F] transition font-light hover:font-medium";
+      ? "flex items-center gap-4 px-3 py-2 rounded-[6px] bg-white text-[#D9534F] font-medium text-[15px]"
+      : "flex items-center gap-4 px-3 py-2 rounded-[6px] text-[15px] hover:bg-white hover:text-[#D9534F] transition font-light hover:font-medium";
   };
 
   const userInfo = useUserInfo();

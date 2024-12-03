@@ -12,7 +12,7 @@ const inputfieldstyle =
   "w-full px-3 py-2 border rounded-[6px] focus:outline-none focus:ring-2 focus:ring-orange-500";
 
 const Register = () => {
-  const { data, dataError } = useUserData();
+  const { data, error:dataError } = useUserData();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

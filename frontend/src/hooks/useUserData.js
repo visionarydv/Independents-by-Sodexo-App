@@ -41,13 +41,12 @@ const useUserData = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setResult(data);
     } else if (error) {
       setResultError(error);
       console.error("Error fetching user data");
     }
-  }, [data, error, result]);
+  }, [data, error]);
 
   useEffect(() => {
     if (userData) {
@@ -56,7 +55,7 @@ const useUserData = () => {
       setResultError(userError);
       console.error("Error fetching token user data");
     }
-  }, [userData, userError, result]);
+  }, [userData, userError]);
 
   return { data: result, error: resultError };
 };

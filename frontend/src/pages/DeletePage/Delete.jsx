@@ -19,7 +19,7 @@ const Delete = () => {
   const [deleteUser, { isLoading: isDeletingUser }] = useDeleteUserMutation();
   const [deactivateUser, { isLoading: isDeactivatingUser }] =
     useDeactivateUserMutation();
-  const {userData,userError} = useUserData();
+  const {data:userData,error:userError} = useUserData();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Delete = () => {
       navigate("/");
       dispatch(logout());
     }
-  }, [navigate,userError,dispatch]);
+  }, [navigate,userError,dispatch,userData]);
 
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -46,9 +46,8 @@ const Delete = () => {
   }, [refetch]);
 
   useEffect(() => {
-    if (fetchedUsers) {
+    if (fetchedUsers && userData) {
       setUsers(fetchedUsers);
-      console.log(fetchedUsers);
     }
     if (isLoading) {
       toast.info("Loading users data...", { autoClose: 2000 });
@@ -58,7 +57,7 @@ const Delete = () => {
     if (fetchedUsers) {
       toast.dismiss();
     }
-  }, [fetchedUsers, isLoading, error]);
+  }, [fetchedUsers, isLoading, error,userData]);
 
   const handleDelete = async (id) => {
     try {
@@ -95,8 +94,9 @@ const Delete = () => {
   };
 
   useEffect(() => {
-    if (users && userData?.data) {
+    if (users && userData?._id) {
       const filtered = users.filter((user) => {
+        console.log(user)
         const matchesUsername = user.username
           .toLowerCase()
           .includes(filters.username.toLowerCase());
@@ -112,7 +112,7 @@ const Delete = () => {
           (filters.status === "active" && user.isActivated) ||
           (filters.status === "inactive" && !user.isActivated);
 
-        const isExcluded = user._id === userData.data._id;
+        const isExcluded = user._id === userData._id;
 
         return (
           matchesUsername &&
@@ -130,7 +130,7 @@ const Delete = () => {
         return prevFilteredUsers;
       });
     }
-  }, [users, userData?.data, filters]);
+  }, [users, filters,userData]);
 
   return (
     <div className="flex h-screen overflow-hidden font-poppins bg-gradient-to-r from-white to-gray-100">
